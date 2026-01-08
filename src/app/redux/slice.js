@@ -1,9 +1,32 @@
-const { createSlice, nanoid, current, createAsyncThunk } = require("@reduxjs/toolkit");
+// const { createSlice, nanoid, current, createAsyncThunk } = require("@reduxjs/toolkit");
+import {
+    createSlice,
+    nanoid,
+    current,
+    createAsyncThunk
+  } from "@reduxjs/toolkit";
 
-const initialState = {
+
+const getUsersFromLocalStorage = () => {
+    if (typeof window !== "undefined") {
+      const users = localStorage.getItem("users");
+      return users ? JSON.parse(users) : [];
+    }
+    return [];
+  };
+  
+  const initialState = {
     userAPIData: [],
-    users: JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : []
-}
+    users: getUsersFromLocalStorage(),
+    isloading: false,
+  error: null
+  };
+
+
+// const initialState = {
+//     userAPIData: [],
+//     users: JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : []
+// }
 
 export const fetchApiUsers = createAsyncThunk("fetchApiUsers", async () => {
 
@@ -19,7 +42,8 @@ const Slice = createSlice({
 
             const data = {
                 id: nanoid(),
-                name: action.payload
+                name: action.payload.name,
+                mail:action.payload.mail
             }
 
             state.users.push(data);
@@ -37,13 +61,18 @@ const Slice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchApiUsers.fulfilled, (state, action) => {
-            console.log("reducer", action);
-
-            state.isloading = false,
-                state.userAPIData = action.payload
-        })
-
+        builder
+      .addCase(fetchApiUsers.pending, (state) => {
+        state.isloading = true;
+      })
+      .addCase(fetchApiUsers.fulfilled, (state, action) => {
+        state.isloading = false;
+        state.userAPIData = action.payload;
+      })
+      .addCase(fetchApiUsers.rejected, (state, action) => {
+        state.isloading = false;
+        state.error = action.error.message;
+      });
     }
 });
 
