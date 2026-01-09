@@ -47,11 +47,15 @@ This project focuses on understanding the following concepts:
    - Dynamic UI updates
    - Component composition
 
-<!--## 📸 Screenshots
-![add data](https://i.ibb.co/hR1mB09J/button.png)
-![api data](https://i.ibb.co/hR1mB09J/button.png)
-![remove data](https://i.ibb.co/hR1mB09J/button.png)
-![todo](https://i.ibb.co/hR1mB09J/button.png)-->
+## 📸 Screenshots
+![add data](https://i.ibb.co/p6GzWk1D/apifech.png)
+![api data](https://i.ibb.co/GfCYKSXN/remove-User.png)
+![remove data](https://i.ibb.co/SD6txpMy/todo.png)
+![todo](https://i.ibb.co/gLmbNRxb/userdata-add-and-show.png)
+
+
+
+
 
 
 ## 📂 Project Structure
